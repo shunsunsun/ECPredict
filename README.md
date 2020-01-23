@@ -5,6 +5,7 @@
 [![GitHub version](https://badge.fury.io/gh/ecrl%2FECPredict.svg)](https://badge.fury.io/gh/ecrl%2FECPredict)
 [![PyPI version](https://badge.fury.io/py/ecpredict.svg)](https://badge.fury.io/py/ecpredict)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ECRL/ECPredict/master/LICENSE.txt)
+[![Build Status](https://dev.azure.com/uml-ecrl/package-management/_apis/build/status/ECRL.ECPredict?branchName=master)](https://dev.azure.com/uml-ecrl/package-management/_build/latest?definitionId=4&branchName=master)
 
 **ECPredict** is an open source Python package containing pre-built models for predicting fuel properties developed by the UMass Lowell Energy and Combustion Research Laboratory team using [ECNet](https://github.com/ecrl/ecnet). ECPredict currently offers predictive models for the following fuel properties:
 - [Cetane number](https://en.wikipedia.org/wiki/Cetane_number)
@@ -15,6 +16,8 @@
 - [Pour point](https://en.wikipedia.org/wiki/Pour_point)
 - [Research octane number](https://en.wikipedia.org/wiki/Octane_rating#Research_Octane_Number_(RON))
 - [Yield sooting index](https://www.sciencedirect.com/science/article/pii/S0010218017304728)
+
+To cite this tool, cite [ECNet](https://joss.theoj.org/papers/10.21105/joss.00401).
 
 # Installation
 
