@@ -37,18 +37,22 @@ _TRAINED_MODELS = {
 }
 
 _TEST_MED_ABS_ERRORS = {
-    'CN_alvadesc': 6.6711,
-    'CN_padel': 6.3840,
-    'CP_alvadesc': 0.6421,
-    'CP_padel': 1.2351,
-    'KV_alvadesc': 0.0618,
-    'KV_padel': 0.1991,
-    'OS_alvadesc': 2.0616,
-    'PP_alvadesc': 3.9422,
-    'PP_padel': 9.6152,
-    'RON_alvadesc': 3.8861,
-    'YSI_alvadesc': 3.6471,
-    'YSI_padel': 4.6917
+    'CN_alvadesc': 5.1397,
+    'CN_padel': 6.0640,
+    'CP_alvadesc': 4.8851,
+    'CP_padel': 8.7707,
+    'KV_alvadesc': 0.0725,
+    'KV_padel': 0.2153,
+    'MON_alvadesc': 3.9269,
+    'MON_padel': 12.1012,
+    'OS_alvadesc': 2.0652,
+    'OS_padel': 6.8286,
+    'PP_alvadesc': 3.2287,
+    'PP_padel': 3.4133,
+    'RON_alvadesc': 3.6665,
+    'RON_padel': 9.7657,
+    'YSI_alvadesc': 3.3627,
+    'YSI_padel': 4.8894
 }
 
 
@@ -85,11 +89,32 @@ def kinematic_viscosity(smiles: list, backend: str = 'padel') -> tuple:
             _TEST_MED_ABS_ERRORS['KV_{}'.format(backend)])
 
 
+def motor_octane_number(smiles: list, backend: str = 'padel') -> tuple:
+
+    trained_prj = _get_prj('MON', backend)
+    return (trained_prj.use(smiles, backend),
+            _TEST_MED_ABS_ERRORS['MON_{}'.format(backend)])
+
+
+def octane_sensitivity(smiles: list, backend: str = 'padel') -> tuple:
+
+    trained_prj = _get_prj('OS', backend)
+    return (trained_prj.use(smiles, backend),
+            _TEST_MED_ABS_ERRORS['OS_{}'.format(backend)])
+
+
 def pour_point(smiles: list, backend: str = 'padel') -> tuple:
 
     trained_prj = _get_prj('PP', backend)
     return (trained_prj.use(smiles, backend),
             _TEST_MED_ABS_ERRORS['PP_{}'.format(backend)])
+
+
+def research_octane_number(smiles: list, backend: str = 'padel') -> tuple:
+
+    trained_prj = _get_prj('RON', backend)
+    return (trained_prj.use(smiles, backend),
+            _TEST_MED_ABS_ERRORS['RON_{}'.format(backend)])
 
 
 def yield_sooting_index(smiles: list, backend: str = 'padel') -> tuple:

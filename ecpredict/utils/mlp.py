@@ -12,7 +12,7 @@
 from os import environ
 
 # 3rd party imports
-from numpy import array_equiv
+from numpy import array
 from tensorflow.keras.models import load_model
 
 environ['TF_CPP_MIN_LOG_LEVEL'] = '2'

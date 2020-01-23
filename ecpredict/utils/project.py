@@ -12,7 +12,7 @@
 from os import walk
 from os.path import basename, join
 from pickle import dump as pdump, load as pload
-from re import compile, IGNORECASE
+from re import compile, IGNORECASE, sub
 from tempfile import TemporaryDirectory
 from zipfile import ZipFile
 
@@ -20,29 +20,11 @@ from zipfile import ZipFile
 from alvadescpy import smiles_to_descriptors
 from numpy import asarray, mean
 from padelpy import from_smiles
-from yaml import load, FullLoader
 
 # ECPredict imports
 from ecpredict.utils.mlp import MultilayerPerceptron
 
-from ecnet.utils.server_utils import open_config, open_df
-
-CONFIG_RE = compile(r'^.*\.yml$', IGNORECASE)
 MODEL_RE = compile(r'^.*\.h5$', IGNORECASE)
-
-
-def open_config(filename: str) -> dict:
-    '''Returns contents of YML model configuration file
-
-    Args:
-        filename (str): path to YML configuration file
-
-    Returns:
-        dict: variable names and values
-    '''
-
-    with open(filename, 'r') as cf_file:
-        return load(cf_file, FullLoader)
 
 
 def open_df(filename: str) -> 'DataFrame':
@@ -69,8 +51,7 @@ class TrainedProject:
             filename (str): name/path of the trained .prj file
         '''
 
-        self._df = None
-        self._config = None
+        self._inp_names = None
         self._models = []
 
         with ZipFile(filename, 'r') as zf:
@@ -80,15 +61,16 @@ class TrainedProject:
                 prj_dirname = join(tmpdirname, basename(
                     filename.replace('.prj', '')
                 ))
-                self._df = open_df(join(prj_dirname, 'data.d'))
+                with open(join(prj_dirname, 'inp.txt'), 'r') as txt_file:
+                    self._inp_names = txt_file.readlines()
+                txt_file.close()
+                for idx, line in enumerate(self._inp_names):
+                    self._inp_names[idx] = sub(r'\n$', '', line)
                 for root, _, files in walk(prj_dirname):
                     for f in files:
                         if MODEL_RE.match(f) is not None:
                             _model = MultilayerPerceptron(join(root, f))
-                            _model.load()
                             self._models.append(_model)
-                        elif CONFIG_RE.match(f) is not None:
-                            self._config = open_config(join(root, f))
 
     def use(self, smiles: list, backend: str = 'padel'):
         ''' use: uses the trained project to predict values for supplied
@@ -114,7 +96,8 @@ class TrainedProject:
             mols = [from_smiles(s) for s in smiles]
         else:
             raise ValueError('Unknown backend software: {}'.format(backend))
-        return mean([model.use(asarray(
-            [[float(mol[name]) for name in self._df._input_names]
+        preds = mean([model.use(asarray(
+            [[float(mol[name]) for name in self._inp_names]
              for mol in mols]
         )) for model in self._models], axis=0)
+        return [p[0] for p in preds]
