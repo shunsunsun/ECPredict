@@ -6,7 +6,7 @@
 [![PyPI version](https://badge.fury.io/py/ecpredict.svg)](https://badge.fury.io/py/ecpredict)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ECRL/ECPredict/master/LICENSE.txt)
 
-**ECPredict** is an open source Python package containing pre-built models developed by the UMass Lowell Energy and Combustion Research Laboratory team using [ECNet](https://github.com/ecrl/ecnet) for predicting fuel properties. ECPredict currently offers predictive models for the following fuel properties:
+**ECPredict** is an open source Python package containing pre-built models for predicting fuel properties developed by the UMass Lowell Energy and Combustion Research Laboratory team using [ECNet](https://github.com/ecrl/ecnet). ECPredict currently offers predictive models for the following fuel properties:
 - [Cetane number](https://en.wikipedia.org/wiki/Cetane_number)
 - [Cloud point](https://en.wikipedia.org/wiki/Cloud_point)
 - [Kinematic viscosity](https://en.wikipedia.org/wiki/Viscosity#Dynamic_and_kinematic_viscosity)
