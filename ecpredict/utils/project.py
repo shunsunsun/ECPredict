@@ -22,9 +22,22 @@ from numpy import asarray, mean
 from padelpy import from_smiles
 
 # ECPredict imports
+from ecpredict.utils.loc_errors import TRAINED_MODELS
 from ecpredict.utils.mlp import MultilayerPerceptron
 
 MODEL_RE = compile(r'^.*\.h5$', IGNORECASE)
+
+
+def get_prj(prop: str, backend: str) -> 'TrainedProject':
+
+    to_use = '{}_{}'.format(prop, backend)
+    available_models = list(TRAINED_MODELS.keys())
+    if to_use not in available_models:
+        raise IndexError('Model for `{}` trained with `{}` descriptors not '
+                         'found in available models: {}'.format(
+                             prop, backend, available_models
+                         ))
+    return TrainedProject(TRAINED_MODELS[to_use])
 
 
 def open_df(filename: str) -> 'DataFrame':
@@ -72,7 +85,7 @@ class TrainedProject:
                             _model = MultilayerPerceptron(join(root, f))
                             self._models.append(_model)
 
-    def use(self, smiles: list, backend: str = 'padel'):
+    def use(self, smiles: list, backend: str = 'padel') -> 'array':
         ''' use: uses the trained project to predict values for supplied
         molecules
 
