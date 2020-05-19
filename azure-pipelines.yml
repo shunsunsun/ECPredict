@@ -23,4 +23,5 @@ steps:
 - script: |
     cd tests
     python test_padel.py
+    python test_blend.py
   displayName: 'Unit Tests'
