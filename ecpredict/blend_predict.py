@@ -20,7 +20,7 @@ def _linear_blend_err(prop_err: float, proportions: tuple,
         if omit[idx] is True:
             continue
         else:
-            squared_err += (proportion * prop_err)**2
+            squared_err += (proportion**2 * prop_err**2)
     return sqrt(squared_err)
 
 
