@@ -16,6 +16,12 @@ class TestBlends(unittest.TestCase):
         self.assertEqual(result[1], 0)
         cetane_number_blend(mix, (0.4, 0.25, 0.35))
 
+    def test_cp_blend(self):
+
+        cloud_point_blend(smiles, (0.4, 0.25, 0.35))
+        cloud_point_blend(known_vals, (0.4, 0.25, 0.35))
+        cloud_point_blend(mix, (0.4, 0.25, 0.35))
+
     def test_ysi_blend(self):
 
         yield_sooting_index_blend(smiles, (0.4, 0.25, 0.35))
