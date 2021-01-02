@@ -9,6 +9,7 @@ install_requires = [
 if '--omit_tf' in argv:
     argv.remove('--omit_tf')
 else:
+    install_requires.append('h5py==2.10.0')
     install_requires.append('tensorflow==2.0.0')
 
 setup(
