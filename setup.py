@@ -14,7 +14,7 @@ else:
 
 setup(
     name='ecpredict',
-    version='0.1.0',
+    version='0.1.1',
     description='UMass Lowell Energy and Combustion Research Laboratory '
                 'Pre-built Models',
     url='https://github.com/ecrl/ecpredict',
