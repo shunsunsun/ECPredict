@@ -109,6 +109,10 @@ class TrainedProject:
             mols = [from_smiles(s) for s in smiles]
         else:
             raise ValueError('Unknown backend software: {}'.format(backend))
+        for idx, mol in enumerate(mols):
+            for key, value in mol.items():
+                if mol[key] == '':
+                    mols[idx][key] = 0
         preds = mean([model.use(asarray(
             [[float(mol[name]) for name in self._inp_names]
              for mol in mols]
