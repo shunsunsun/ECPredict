@@ -3,7 +3,7 @@ from sys import argv
 
 install_requires = [
     'alvadescpy==0.1.0',
-    'padelpy==0.1.6'
+    'padelpy==0.1.8'
 ]
 
 if '--omit_tf' in argv:
