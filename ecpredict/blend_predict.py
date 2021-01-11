@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# ecpredict/blend_predict.py
+# v.0.1.2
+# Developed in 2020 by Travis Kessler <travis.j.kessler@gmail.com>
+#
+# Contains function for predicting properties of multi-component blends
+#
+
 from math import sqrt
 
 from ecpredict.utils.loc_errors import TEST_MED_ABS_ERRORS
