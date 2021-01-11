@@ -3,7 +3,6 @@
 # ECPredict: Pre-built predictive models for a variety of fuel properties
 
 [![GitHub version](https://badge.fury.io/gh/ecrl%2FECPredict.svg)](https://badge.fury.io/gh/ecrl%2FECPredict)
-[![PyPI version](https://badge.fury.io/py/ecpredict.svg)](https://badge.fury.io/py/ecpredict)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ECRL/ECPredict/master/LICENSE.txt)
 [![Build Status](https://dev.azure.com/uml-ecrl/package-management/_apis/build/status/ECRL.ECPredict?branchName=master)](https://dev.azure.com/uml-ecrl/package-management/_build/latest?definitionId=4&branchName=master)
 
@@ -21,13 +20,7 @@ To cite this tool, cite [ECNet](https://joss.theoj.org/papers/10.21105/joss.0040
 
 # Installation
 
-ECPredict can be installed via **pip** or from source. To install via pip, execute the following in your command line/terminal/Python environment:
-
-```
-pip install ecpredict
-```
-
-To install from source, download the repository and run _setup.py_ in your command line/terminal/Python environment:
+ECPredict must be installed from source. To install from source, download the repository and run _setup.py_ in your command line/terminal/Python environment:
 
 ```
 git clone https://github.com/ecrl/ecpredict
