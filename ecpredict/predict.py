@@ -65,6 +65,8 @@ def research_octane_number(smiles: list, backend: str = 'padel') -> tuple:
 
 def yield_sooting_index(smiles: list, backend: str = 'padel') -> tuple:
 
+    # Temp. force to PaDEL
+    backend = 'padel'
     trained_prj = get_prj('YSI', backend)
     return (trained_prj.use(smiles, backend),
             TEST_MED_ABS_ERRORS['YSI_{}'.format(backend)])
