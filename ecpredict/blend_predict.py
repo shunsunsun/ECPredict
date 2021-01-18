@@ -12,6 +12,9 @@ from math import sqrt
 
 from ecpredict.utils.loc_errors import TEST_MED_ABS_ERRORS
 from ecpredict.utils.project import get_prj
+from ecpredict.predict import heat_of_combustion
+
+from padelpy import from_smiles
 
 
 def _celsius_to_rankine(temp: float) -> float:
@@ -36,6 +39,18 @@ def _linear_blend_err(prop_err: float, proportions: tuple,
             continue
         else:
             squared_err += (proportion**2 * prop_err**2)
+    return sqrt(squared_err)
+
+
+def _linear_blend_err_multi(errs: list, proportions: tuple,
+                            omit: list) -> float:
+
+    squared_err = 0
+    for idx, proportion in enumerate(proportions):
+        if omit[idx] is True:
+            continue
+        else:
+            squared_err += (proportion**2 * errs[idx]**2)
     return sqrt(squared_err)
 
 
@@ -78,6 +93,27 @@ def cloud_point_blend(smiles_and_vals: tuple, proportions: tuple,
     for idx, val in enumerate(cp_values):
         cp_sum += (proportions[idx] * val**13.45)
     return _rankine_to_celsius(cp_sum**(1 / 13.45))
+
+
+def heat_of_combustion_blend(smiles_and_vals: tuple,
+                             proportions: tuple) -> tuple:
+
+    vals = []
+    errors = []
+    omit = []
+    for smi in smiles_and_vals:
+        if type(smi) is str:
+            v, e = heat_of_combustion([smi])
+            vals.append(v[0])
+            errors.append(e[0])
+            omit.append(False)
+        else:
+            vals.append(smi)
+            errors.append(0)
+            omit.append(True)
+    res_val = _linear_blend_ave(vals, proportions)
+    res_error = _linear_blend_err_multi(errors, proportions, omit)
+    return (res_val, res_error)
 
 
 def yield_sooting_index_blend(smiles_and_vals: tuple, proportions: tuple,
