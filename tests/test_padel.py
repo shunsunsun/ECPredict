@@ -14,6 +14,10 @@ class TestProperties(unittest.TestCase):
 
         cloud_point(smiles)
 
+    def test_heat_of_combustion(self):
+
+        heat_of_combustion(smiles)
+
     def test_kinematic_viscosity(self):
 
         kinematic_viscosity(smiles)
