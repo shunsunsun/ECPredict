@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # ecpredict/predict.py
-# v.0.1.2
+# v.0.1.3
 # Developed in 2020 by Travis Kessler <travis.j.kessler@gmail.com>
 #
 # Contains function for predicting properties using pre-trained .prj files
