@@ -12,6 +12,7 @@
 # ECPredict imports
 from ecpredict.utils.loc_errors import TEST_MED_ABS_ERRORS
 from ecpredict.utils.project import get_prj
+from ecpredict.utils.equations import _density, _dulong
 
 # 3rd party imports
 from padelpy import from_smiles
@@ -31,42 +32,31 @@ def cloud_point(smiles: list, backend: str = 'padel') -> tuple:
             TEST_MED_ABS_ERRORS['CP_{}'.format(backend)])
 
 
-def heat_of_combustion(smiles: list) -> tuple:
+def lower_heating_value(smiles: list) -> tuple:
 
     desc = from_smiles(smiles)
     counts = [[
         int(d['nC']),
         int(d['nH']),
-        int(d['nS']),
         int(d['nO']),
-        int(d['nN'])
+        int(d['nS'])
     ] for d in desc]
     totals = [sum(c) for c in counts]
     props = [[c / totals[i] for c in cnt] for i, cnt in enumerate(counts)]
     res_dulong = []
-    res_boie = []
-    res_lloyd_davenport = []
     for p in props:
-        res_dulong.append(
-            -0.3390 * p[0] - 1.433 * p[1] - 0.094 * p[2] + 0.179 * p[3]
-        )
-        res_boie.append(
-            -0.3578 * p[0] - 1.1357 * p[1] + 0.0845 * p[3] - 0.0594 * p[4]\
-                - 0.1119 * p[2]
-        )
-        res_lloyd_davenport.append(
-            -0.35777 * p[0] - 0.91758 * p[1] + 0.08451 * p[3] - 0.05938 * p[4]\
-                - 0.11187 * p[2]
-        )
-    err_dulong = [abs(0.036 * r) for r in res_dulong]
-    err_boie = [abs(0.0094 * r) for r in res_boie]
-    err_lloyd_davenport = [abs(0.005 * r) for r in res_lloyd_davenport]
-    return (
-        [(res_dulong[i] + res_boie[i] + res_lloyd_davenport[i]) / 3
-         for i in range(len(res_dulong))],
-        [(err_dulong[i] + err_boie[i] + err_lloyd_davenport[i]) / 3
-         for i in range(len(err_dulong))]
-    )
+        res_dulong.append(_dulong(p[0], p[1], p[2], p[3]))
+    densities = []
+    for c in counts:
+        densities.append(_density(c[0], c[1], c[2], c[3]))
+    lhv = []
+    for idx, d in enumerate(densities):
+        lhv.append(res_dulong[idx] * d)
+    errors = []
+    for l in lhv:
+        # error assumed at 3.8%
+        errors.append(0.038 * l)
+    return (lhv, errors)
 
 
 def kinematic_viscosity(smiles: list, backend: str = 'padel') -> tuple:
