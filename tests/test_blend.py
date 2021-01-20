@@ -22,11 +22,17 @@ class TestBlends(unittest.TestCase):
         cloud_point_blend(known_vals, (0.4, 0.25, 0.35))
         cloud_point_blend(mix, (0.4, 0.25, 0.35))
 
-    def test_hoc_blend(self):
+    def test_lhv_blend(self):
 
-        heat_of_combustion_blend(smiles, (0.4, 0.25, 0.35))
-        heat_of_combustion_blend(known_vals, (0.4, 0.25, 0.35))
-        heat_of_combustion_blend(mix, (0.4, 0.25, 0.35))
+        lower_heating_value_blend(smiles, (0.4, 0.25, 0.35))
+        lower_heating_value_blend(known_vals, (0.4, 0.25, 0.35))
+        lower_heating_value_blend(mix, (0.4, 0.25, 0.35))
+
+    def test_kv_blend(self):
+
+        kinematic_viscosity_blend(smiles, (0.4, 0.25, 0.35))
+        kinematic_viscosity_blend(known_vals, (0.4, 0.25, 0.35))
+        kinematic_viscosity_blend(mix, (0.4, 0.25, 0.35))
 
     def test_ysi_blend(self):
 

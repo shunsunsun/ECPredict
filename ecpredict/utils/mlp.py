@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # ecpredict/utils/mlp.py
-# v.0.1.3
+# v.0.1.4
 # Developed in 2020 by Travis Kessler <travis.j.kessler@gmail.com>
 #
 # Contains the "MultilayerPerceptron" (feed-forward neural network) class
