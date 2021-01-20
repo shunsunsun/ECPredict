@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# ecpredict/utils/equations.py
+# v.0.1.4
+# Developed in 2020 by Travis Kessler <travis.j.kessler@gmail.com>
+#
+# Contains various equations for formulae, conversions
+#
+
 from math import sqrt
 
 

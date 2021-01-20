@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # ecpredict/blend_predict.py
-# v.0.1.3
+# v.0.1.4
 # Developed in 2020 by Travis Kessler <travis.j.kessler@gmail.com>
 #
 # Contains function for predicting properties of multi-component blends
