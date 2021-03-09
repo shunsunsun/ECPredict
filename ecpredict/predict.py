@@ -35,23 +35,22 @@ def cloud_point(smiles: list, backend: str = 'padel') -> tuple:
 def lower_heating_value(smiles: list) -> tuple:
 
     desc = from_smiles(smiles)
-    counts = [[
-        int(d['nC']),
-        int(d['nH']),
-        int(d['nO']),
-        int(d['nS'])
+    masses = [[
+        int(d['nC']) * 12.011,
+        int(d['nH']) * 1.008,
+        int(d['nO']) * 15.999,
+        int(d['nS']) * 32.06
     ] for d in desc]
-    totals = [sum(c) for c in counts]
-    props = [[c / totals[i] for c in cnt] for i, cnt in enumerate(counts)]
-    res_dulong = []
-    for p in props:
-        res_dulong.append(_dulong(p[0], p[1], p[2], p[3]))
-    densities = []
-    for c in counts:
-        densities.append(_density(c[0], c[1], c[2], c[3]))
+    totals = [sum(m) for m in masses]
+    mass_fracs = [[
+        m[0] / totals[i],
+        m[1] / totals[i],
+        m[2] / totals[i],
+        m[3] / totals[i]
+    ] for i, m in enumerate(masses)]
     lhv = []
-    for idx, d in enumerate(densities):
-        lhv.append(res_dulong[idx] * d)
+    for m in mass_fracs:
+        lhv.append(_dulong(m[0], m[1], m[2], m[3]))
     errors = []
     for l in lhv:
         # error assumed at 3.8%
