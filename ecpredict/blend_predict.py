@@ -52,7 +52,7 @@ def cloud_point_blend(smiles_and_vals: tuple, proportions: tuple,
     cp_sum = 0
     for idx, val in enumerate(cp_values):
         cp_sum += (proportions[idx] * val**13.45)
-    return _rankine_to_celsius(cp_sum**(1 / 13.45))
+    return (_rankine_to_celsius(cp_sum**(1 / 13.45)), 0.0)
 
 
 def higher_heating_value_blend(smiles_and_vals: tuple,
