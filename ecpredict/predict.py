@@ -12,7 +12,7 @@
 # ECPredict imports
 from ecpredict.utils.loc_errors import TEST_MED_ABS_ERRORS
 from ecpredict.utils.project import get_prj
-from ecpredict.utils.equations import _density, _dulong
+from ecpredict.utils.equations import _density, _dulong_hhv, _dulong_lhv
 
 # 3rd party imports
 from padelpy import from_smiles
