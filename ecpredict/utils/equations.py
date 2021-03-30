@@ -40,14 +40,30 @@ def _density(c_c: int, c_h: int, c_o: int, c_s: int) -> float:
     return (12.011 * c_c + 1.008 * c_h + 15.999 * c_o + 32.06 * c_s) / 1000
 
 
-def _dulong(p_c: float, p_h: float, p_o: float, p_s: float) -> float:
+def _dulong_hhv(mc: float, mh: float, mo: float, ms: float) -> float:
     ''' https://doi.org/10.1016/j.fuproc.2016.06.040
 
     Args:
-        p_c (float): proportion of carbon atoms in compound
-        p_h (float): proportion of hydrogen atoms in compound
-        p_o (float): proportion of oxygen atoms in compound
-        p_s (float): proportion of sulfur atoms in compound
+        mc (float): mass fraction of carbon atoms in compound
+        mh (float): mass fraction of hydrogen atoms in compound
+        mo (float): mass fraction of oxygen atoms in compound
+        ms (float): mass fraction of sulfur atoms in compound
+
+    Returns:
+        float: higher heating value, in kJ/g
+    '''
+
+    return 33.8 * p_c + 144.3 * (p_h - p_o / 8) + 9.4 * p_s
+
+
+def _dulong_lhv(p_c: float, p_h: float, p_o: float, p_s: float) -> float:
+    ''' https://doi.org/10.1016/j.fuproc.2016.06.040
+
+    Args:
+        mc (float): mass fraction of carbon atoms in compound
+        mh (float): mass fraction of hydrogen atoms in compound
+        mo (float): mass fraction of oxygen atoms in compound
+        ms (float): mass fraction of sulfur atoms in compound
 
     Returns:
         float: lower heating value, in kJ/g

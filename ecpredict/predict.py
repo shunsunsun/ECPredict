@@ -32,6 +32,32 @@ def cloud_point(smiles: list, backend: str = 'padel') -> tuple:
             TEST_MED_ABS_ERRORS['CP_{}'.format(backend)])
 
 
+def higher_heating_value(smiles: list) -> tuple:
+
+    desc = from_smiles(smiles)
+    masses = [[
+        int(d['nC']) * 12.011,
+        int(d['nH']) * 1.008,
+        int(d['nO']) * 15.999,
+        int(d['nS']) * 32.06
+    ] for d in desc]
+    totals = [sum(m) for m in masses]
+    mass_fracs = [[
+        m[0] / totals[i],
+        m[1] / totals[i],
+        m[2] / totals[i],
+        m[3] / totals[i]
+    ] for i, m in enumerate(masses)]
+    hhv = []
+    for m in mass_fracs:
+        hhv.append(_dulong_hhv(m[0], m[1], m[2], m[3]))
+    errors = []
+    for hv in hhv:
+        # error assumed at 3.8%
+        errors.append(0.038 * hv)
+    return (hhv, errors)
+
+
 def lower_heating_value(smiles: list) -> tuple:
 
     desc = from_smiles(smiles)
@@ -50,11 +76,11 @@ def lower_heating_value(smiles: list) -> tuple:
     ] for i, m in enumerate(masses)]
     lhv = []
     for m in mass_fracs:
-        lhv.append(_dulong(m[0], m[1], m[2], m[3]))
+        lhv.append(_dulong_lhv(m[0], m[1], m[2], m[3]))
     errors = []
-    for l in lhv:
+    for hv in lhv:
         # error assumed at 3.8%
-        errors.append(0.038 * l)
+        errors.append(0.038 * hv)
     return (lhv, errors)
 
 

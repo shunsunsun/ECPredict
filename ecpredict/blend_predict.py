@@ -12,7 +12,7 @@ from math import sqrt
 
 from ecpredict.utils.loc_errors import TEST_MED_ABS_ERRORS
 from ecpredict.utils.project import get_prj
-from ecpredict.predict import lower_heating_value
+from ecpredict.predict import lower_heating_value, higher_heating_value
 from ecpredict.utils.equations import _celsius_to_rankine, _linear_blend_ave,\
     _linear_blend_err, _linear_blend_err_multi, _rankine_to_celsius
 
@@ -53,6 +53,27 @@ def cloud_point_blend(smiles_and_vals: tuple, proportions: tuple,
     for idx, val in enumerate(cp_values):
         cp_sum += (proportions[idx] * val**13.45)
     return _rankine_to_celsius(cp_sum**(1 / 13.45))
+
+
+def higher_heating_value_blend(smiles_and_vals: tuple,
+                               proportions: tuple) -> tuple:
+
+    vals = []
+    errors = []
+    omit = []
+    for smi in smiles_and_vals:
+        if type(smi) is str:
+            v, e = higher_heating_value([smi])
+            vals.append(v[0])
+            errors.append(e[0])
+            omit.append(False)
+        else:
+            vals.append(smi)
+            errors.append(0)
+            omit.append(True)
+    res_val = _linear_blend_ave(vals, proportions)
+    res_error = _linear_blend_err_multi(errors, proportions, omit)
+    return (res_val, res_error)
 
 
 def lower_heating_value_blend(smiles_and_vals: tuple,
